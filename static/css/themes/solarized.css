@@ -1,0 +1,94 @@
+/*
+ * Theme: Solarized
+ * Based on Ethan Schoonover's Solarized palette (https://ethanschoonover.com/solarized/)
+ *
+ * Solarized is designed as complementary light/dark pairs: base3/base03,
+ * base2/base02, base1/base01, base0/base00 swap roles between the two
+ * modes, while the eight accent colors (yellow/orange/red/magenta/violet/
+ * blue/cyan/green) stay the same in both.
+ *
+ * Supports the system `prefers-color-scheme` by default, and can be
+ * overridden explicitly via [data-theme="light"|"dark"] on <html> (see
+ * templates/partials/theme-toggle.html).
+ */
+
+:root {
+  /* -- Solarized base palette -- */
+  --sol-base03: #002b36;
+  --sol-base02: #073642;
+  --sol-base01: #586e75;
+  --sol-base00: #657b83;
+  --sol-base0: #839496;
+  --sol-base1: #93a1a1;
+  --sol-base2: #eee8d5;
+  --sol-base3: #fdf6e3;
+  --sol-yellow: #b58900;
+  --sol-orange: #cb4b16;
+  --sol-red: #dc322f;
+  --sol-magenta: #d33682;
+  --sol-violet: #6c71c4;
+  --sol-blue: #268bd2;
+  --sol-cyan: #2aa198;
+  --sol-green: #859900;
+
+  /* -- Light (default) -- */
+  --color-bg: var(--sol-base3);
+  --color-text: var(--sol-base00);
+  --color-link: var(--sol-blue);
+  --color-border: var(--sol-base01);
+  --color-border-muted: var(--sol-base1);
+  --color-border-subtle: var(--sol-base2);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--sol-base1);
+  --syn-keyword: var(--sol-green);
+  --syn-string: var(--sol-cyan);
+  --syn-string-special: var(--sol-magenta);
+  --syn-number: var(--sol-violet);
+  --syn-name: var(--sol-blue);
+  --syn-type: var(--sol-yellow);
+  --syn-function: var(--sol-violet);
+  --syn-namespace: var(--sol-base01);
+  --syn-entity: var(--sol-orange);
+  --syn-error-fg: var(--sol-base3);
+  --syn-error-bg: var(--sol-red);
+  --syn-diff-add-fg: var(--sol-base3);
+  --syn-diff-add-bg: var(--sol-green);
+  --syn-diff-del-fg: var(--sol-base3);
+  --syn-diff-del-bg: var(--sol-red);
+  --syn-generic: var(--sol-base1);
+
+  --toggle-supported: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: var(--sol-base03);
+    --color-text: var(--sol-base0);
+    --color-border: var(--sol-base1);
+    --color-border-muted: var(--sol-base01);
+    --color-border-subtle: var(--sol-base02);
+
+    --syn-comment: var(--sol-base01);
+    --syn-namespace: var(--sol-base1);
+    --syn-error-fg: var(--sol-base03);
+    --syn-diff-add-fg: var(--sol-base03);
+    --syn-diff-del-fg: var(--sol-base03);
+    --syn-generic: var(--sol-base01);
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: var(--sol-base03);
+  --color-text: var(--sol-base0);
+  --color-border: var(--sol-base1);
+  --color-border-muted: var(--sol-base01);
+  --color-border-subtle: var(--sol-base02);
+
+  --syn-comment: var(--sol-base01);
+  --syn-namespace: var(--sol-base1);
+  --syn-error-fg: var(--sol-base03);
+  --syn-diff-add-fg: var(--sol-base03);
+  --syn-diff-del-fg: var(--sol-base03);
+  --syn-generic: var(--sol-base01);
+}

@@ -1,0 +1,50 @@
+/*
+ * Theme: Gradianto - Deep Ocean
+ * Based on thvardhan/Gradianto (https://github.com/thvardhan/Gradianto),
+ * the "Deep Ocean" variant. Colors are taken from
+ * Gradianto_deep_ocean.theme.json and Gradianto_deep_ocean.xml.
+ *
+ * Gradianto ships dark-only variants (no official light complement), so
+ * this theme doesn't support the light/dark toggle -- it always renders
+ * with these colors, and the toggle switch is hidden.
+ */
+
+:root {
+  --grad-bg: #1c2739;
+  --grad-fg: #c1c1c1;
+  --grad-border: #151d2c;
+  --grad-selection: #39487e;
+  --grad-accent: #8ec1ff;
+  --grad-constant: #5067aa;
+  --grad-comment: #5b6b8c;
+  --grad-error: #e74c3c;
+  --grad-added: #2ecc71;
+
+  --color-bg: var(--grad-bg);
+  --color-text: var(--grad-fg);
+  --color-link: var(--grad-accent);
+  --color-border: var(--grad-border);
+  --color-border-muted: var(--grad-selection);
+  --color-border-subtle: var(--grad-border);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--grad-comment);
+  --syn-keyword: var(--grad-accent);
+  --syn-string: var(--grad-constant);
+  --syn-string-special: var(--grad-accent);
+  --syn-number: var(--grad-constant);
+  --syn-name: var(--grad-fg);
+  --syn-type: var(--grad-accent);
+  --syn-function: var(--grad-accent);
+  --syn-namespace: var(--grad-comment);
+  --syn-entity: var(--grad-constant);
+  --syn-error-fg: var(--grad-bg);
+  --syn-error-bg: var(--grad-error);
+  --syn-diff-add-fg: var(--grad-bg);
+  --syn-diff-add-bg: var(--grad-added);
+  --syn-diff-del-fg: var(--grad-bg);
+  --syn-diff-del-bg: var(--grad-error);
+  --syn-generic: var(--grad-comment);
+
+  --toggle-supported: 0;
+}

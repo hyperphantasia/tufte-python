@@ -1,0 +1,49 @@
+/*
+ * Theme: Gradianto - Ultra Light
+ * Based on thvardhan/Gradianto (https://github.com/thvardhan/Gradianto),
+ * the "Ultra Light" variant -- the one Gradianto variant that isn't dark.
+ * Colors are taken from Gradianto_ultra_light.theme.json.
+ *
+ * This theme is light-only, so like the other Gradianto variants it
+ * doesn't support the light/dark toggle; the toggle switch is hidden.
+ */
+
+:root {
+  --grad-bg: #fcf5c7;
+  --grad-fg: #282727;
+  --grad-border: #998f5a;
+  --grad-selection: #d1ac00;
+  --grad-accent: #d1ac00;
+  --grad-string: #6b5b1e;
+  --grad-comment: #998f5a;
+  --grad-error: #b03a2e;
+  --grad-added: #2e7d32;
+
+  --color-bg: var(--grad-bg);
+  --color-text: var(--grad-fg);
+  --color-link: var(--grad-string);
+  --color-border: var(--grad-border);
+  --color-border-muted: var(--grad-selection);
+  --color-border-subtle: var(--grad-border);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--grad-comment);
+  --syn-keyword: var(--grad-accent);
+  --syn-string: var(--grad-string);
+  --syn-string-special: var(--grad-accent);
+  --syn-number: var(--grad-string);
+  --syn-name: var(--grad-fg);
+  --syn-type: var(--grad-accent);
+  --syn-function: var(--grad-accent);
+  --syn-namespace: var(--grad-comment);
+  --syn-entity: var(--grad-string);
+  --syn-error-fg: var(--grad-bg);
+  --syn-error-bg: var(--grad-error);
+  --syn-diff-add-fg: var(--grad-bg);
+  --syn-diff-add-bg: var(--grad-added);
+  --syn-diff-del-fg: var(--grad-bg);
+  --syn-diff-del-bg: var(--grad-error);
+  --syn-generic: var(--grad-comment);
+
+  --toggle-supported: 0;
+}

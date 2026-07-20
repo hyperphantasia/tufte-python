@@ -1,0 +1,143 @@
+/*
+ * Theme: solAArized
+ * Based on Paul Pederson's solAArized palette
+ * (github.com/paulcpederson/solAArized), a WCAG-AA-oriented
+ * reworking of Ethan Schoonover's Solarized
+ * (ethanschoonover.com/solarized/).
+ *
+ * Unlike upstream Solarized, where the eight accent colors are shared
+ * between light and dark mode, solAArized gives every accent color a
+ * separate light/dark value, each independently tuned to clear a
+ * 4.5:1 contrast ratio (WCAG 2.0/2.1 AA, normal text) against its own
+ * mode's background. The five neutral tones (background,
+ * background-highlight, comment, main, emphasis) work the same way.
+ * Verified contrast ratios (against --color-bg):
+ *   light mode: 4.51–7.76:1  |  dark mode: 4.51–6.46:1
+ * All neutrals and accents pass AA for normal text on the primary
+ * background in both modes. Against the -highlight surface, colors
+ * clear 3:1 (AA for large text / UI components) but not all clear
+ * 4.5:1 — keep body copy on --color-bg, not --color-border-subtle.
+ *
+ * Supports the system `prefers-color-scheme` by default, and can be
+ * overridden explicitly via [data-theme="light"|"dark"] on <html> (see
+ * templates/partials/theme-toggle.html).
+ */
+
+:root {
+  /* -- solAArized base palette -- */
+  --sol-background-light: #fdf6e3;
+  --sol-background-highlight-light: #eee8d5;
+  --sol-comment-light: #617575;
+  --sol-main-light: #4F5F5F;
+  --sol-emphasis-light: #445050;
+
+  --sol-background-dark: #002b36;
+  --sol-background-highlight-dark: #003a44;
+  --sol-comment-dark: #79929A;
+  --sol-main-dark: #919EA1;
+  --sol-emphasis-dark: #A1ACAF;
+
+  /* accents: mode-specific pairs, each tuned for AA against its own bg */
+  --sol-yellow-light: #8E6C06;
+  --sol-orange-light: #C64710;
+  --sol-red-light: #DA2825;
+  --sol-magenta-light: #C9367D;
+  --sol-violet-light: #6266CB;
+  --sol-blue-light: #2976AE;
+  --sol-cyan-light: #207E77;
+  --sol-green-light: #697807;
+
+  --sol-yellow-dark: #b38600;
+  --sol-orange-dark: #ea632a;
+  --sol-red-dark: #ff4a47;
+  --sol-magenta-dark: #fa429b;
+  --sol-violet-dark: #8185df;
+  --sol-blue-dark: #2e93dc;
+  --sol-cyan-dark: #2a9d94;
+  --sol-green-dark: #829603;
+
+  /* -- Light (default) -- */
+  --color-bg: var(--sol-background-light);
+  --color-text: var(--sol-main-light);
+  --color-link: var(--sol-blue-light);
+  --color-border: var(--sol-emphasis-light);
+  --color-border-muted: var(--sol-comment-light);
+  --color-border-subtle: var(--sol-background-highlight-light);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--sol-comment-light);
+  --syn-keyword: var(--sol-green-light);
+  --syn-string: var(--sol-cyan-light);
+  --syn-string-special: var(--sol-magenta-light);
+  --syn-number: var(--sol-violet-light);
+  --syn-name: var(--sol-blue-light);
+  --syn-type: var(--sol-yellow-light);
+  --syn-function: var(--sol-violet-light);
+  --syn-namespace: var(--sol-emphasis-light);
+  --syn-entity: var(--sol-orange-light);
+  --syn-error-fg: var(--sol-background-light);
+  --syn-error-bg: var(--sol-red-light);
+  --syn-diff-add-fg: var(--sol-background-light);
+  --syn-diff-add-bg: var(--sol-green-light);
+  --syn-diff-del-fg: var(--sol-background-light);
+  --syn-diff-del-bg: var(--sol-red-light);
+  --syn-generic: var(--sol-comment-light);
+
+  --toggle-supported: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: var(--sol-background-dark);
+    --color-text: var(--sol-main-dark);
+    --color-link: var(--sol-blue-dark);
+    --color-border: var(--sol-emphasis-dark);
+    --color-border-muted: var(--sol-comment-dark);
+    --color-border-subtle: var(--sol-background-highlight-dark);
+
+    --syn-comment: var(--sol-comment-dark);
+    --syn-keyword: var(--sol-green-dark);
+    --syn-string: var(--sol-cyan-dark);
+    --syn-string-special: var(--sol-magenta-dark);
+    --syn-number: var(--sol-violet-dark);
+    --syn-name: var(--sol-blue-dark);
+    --syn-type: var(--sol-yellow-dark);
+    --syn-function: var(--sol-violet-dark);
+    --syn-namespace: var(--sol-emphasis-dark);
+    --syn-entity: var(--sol-orange-dark);
+    --syn-error-fg: var(--sol-background-dark);
+    --syn-error-bg: var(--sol-red-dark);
+    --syn-diff-add-fg: var(--sol-background-dark);
+    --syn-diff-add-bg: var(--sol-green-dark);
+    --syn-diff-del-fg: var(--sol-background-dark);
+    --syn-diff-del-bg: var(--sol-red-dark);
+    --syn-generic: var(--sol-comment-dark);
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: var(--sol-background-dark);
+  --color-text: var(--sol-main-dark);
+  --color-link: var(--sol-blue-dark);
+  --color-border: var(--sol-emphasis-dark);
+  --color-border-muted: var(--sol-comment-dark);
+  --color-border-subtle: var(--sol-background-highlight-dark);
+
+  --syn-comment: var(--sol-comment-dark);
+  --syn-keyword: var(--sol-green-dark);
+  --syn-string: var(--sol-cyan-dark);
+  --syn-string-special: var(--sol-magenta-dark);
+  --syn-number: var(--sol-violet-dark);
+  --syn-name: var(--sol-blue-dark);
+  --syn-type: var(--sol-yellow-dark);
+  --syn-function: var(--sol-violet-dark);
+  --syn-namespace: var(--sol-emphasis-dark);
+  --syn-entity: var(--sol-orange-dark);
+  --syn-error-fg: var(--sol-background-dark);
+  --syn-error-bg: var(--sol-red-dark);
+  --syn-diff-add-fg: var(--sol-background-dark);
+  --syn-diff-add-bg: var(--sol-green-dark);
+  --syn-diff-del-fg: var(--sol-background-dark);
+  --syn-diff-del-bg: var(--sol-red-dark);
+  --syn-generic: var(--sol-comment-dark);
+}

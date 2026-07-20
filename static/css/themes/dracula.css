@@ -1,0 +1,87 @@
+/*
+ * Theme: Dracula
+ * Based on the official Dracula Theme palette (https://github.com/dracula/dracula-theme)
+ * Light mode uses Dracula's own official light complement, Alucard, from
+ * the same repository's published OSS color palette.
+ *
+ * Supports the system `prefers-color-scheme` by default, and can be
+ * overridden explicitly via [data-theme="light"|"dark"] on <html> (see
+ * templates/partials/theme-toggle.html).
+ */
+
+:root {
+  /* -- Alucard (light) -- */
+  --dracula-bg: #fffbeb;
+  --dracula-current-line: #6c664b;
+  --dracula-selection: #cfcfde;
+  --dracula-fg: #1f1f1f;
+  --dracula-comment: #6c664b;
+  --dracula-cyan: #036a96;
+  --dracula-green: #14710a;
+  --dracula-orange: #a34d14;
+  --dracula-pink: #a3144d;
+  --dracula-purple: #644ac9;
+  --dracula-red: #cb3a2a;
+  --dracula-yellow: #846e15;
+
+  --color-bg: var(--dracula-bg);
+  --color-text: var(--dracula-fg);
+  --color-link: var(--dracula-pink);
+  --color-border: var(--dracula-current-line);
+  --color-border-muted: var(--dracula-selection);
+  --color-border-subtle: var(--dracula-selection);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--dracula-comment);
+  --syn-keyword: var(--dracula-pink);
+  --syn-string: var(--dracula-yellow);
+  --syn-string-special: var(--dracula-purple);
+  --syn-number: var(--dracula-purple);
+  --syn-name: var(--dracula-green);
+  --syn-type: var(--dracula-cyan);
+  --syn-function: var(--dracula-green);
+  --syn-namespace: var(--dracula-comment);
+  --syn-entity: var(--dracula-orange);
+  --syn-error-fg: var(--dracula-bg);
+  --syn-error-bg: var(--dracula-red);
+  --syn-diff-add-fg: var(--dracula-bg);
+  --syn-diff-add-bg: var(--dracula-green);
+  --syn-diff-del-fg: var(--dracula-bg);
+  --syn-diff-del-bg: var(--dracula-red);
+  --syn-generic: var(--dracula-comment);
+
+  --toggle-supported: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* -- Dracula (dark) -- */
+    --dracula-bg: #282a36;
+    --dracula-current-line: #44475a;
+    --dracula-selection: #44475a;
+    --dracula-fg: #f8f8f2;
+    --dracula-comment: #6272a4;
+    --dracula-cyan: #8be9fd;
+    --dracula-green: #50fa7b;
+    --dracula-orange: #ffb86c;
+    --dracula-pink: #ff79c6;
+    --dracula-purple: #bd93f9;
+    --dracula-red: #ff5555;
+    --dracula-yellow: #f1fa8c;
+  }
+}
+
+:root[data-theme="dark"] {
+  --dracula-bg: #282a36;
+  --dracula-current-line: #44475a;
+  --dracula-selection: #44475a;
+  --dracula-fg: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-orange: #ffb86c;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-red: #ff5555;
+  --dracula-yellow: #f1fa8c;
+}

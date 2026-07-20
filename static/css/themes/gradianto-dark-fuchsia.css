@@ -1,0 +1,50 @@
+/*
+ * Theme: Gradianto - Dark Fuchsia
+ * Based on thvardhan/Gradianto (https://github.com/thvardhan/Gradianto),
+ * the "Dark Fuchsia" variant. Colors are taken from
+ * Gradianto_dark_fuchsia.theme.json and Gradianto_dark_fuchsia.xml.
+ *
+ * Gradianto ships dark-only variants (no official light complement), so
+ * this theme doesn't support the light/dark toggle -- it always renders
+ * with these colors, and the toggle switch is hidden.
+ */
+
+:root {
+  --grad-bg: #3d214e;
+  --grad-fg: #c8ccd0;
+  --grad-border: #311f39;
+  --grad-selection: #562c6a;
+  --grad-accent: #d07bd2;
+  --grad-constant: #71aa84;
+  --grad-comment: #54806d;
+  --grad-error: #e74c3c;
+  --grad-added: #2ecc71;
+
+  --color-bg: var(--grad-bg);
+  --color-text: var(--grad-fg);
+  --color-link: var(--grad-accent);
+  --color-border: var(--grad-border);
+  --color-border-muted: var(--grad-selection);
+  --color-border-subtle: var(--grad-border);
+
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--grad-comment);
+  --syn-keyword: var(--grad-accent);
+  --syn-string: var(--grad-constant);
+  --syn-string-special: var(--grad-accent);
+  --syn-number: var(--grad-accent);
+  --syn-name: var(--grad-fg);
+  --syn-type: var(--grad-accent);
+  --syn-function: var(--grad-accent);
+  --syn-namespace: var(--grad-comment);
+  --syn-entity: var(--grad-constant);
+  --syn-error-fg: var(--grad-bg);
+  --syn-error-bg: var(--grad-error);
+  --syn-diff-add-fg: var(--grad-bg);
+  --syn-diff-add-bg: var(--grad-added);
+  --syn-diff-del-fg: var(--grad-bg);
+  --syn-diff-del-bg: var(--grad-error);
+  --syn-generic: var(--grad-comment);
+
+  --toggle-supported: 0;
+}
