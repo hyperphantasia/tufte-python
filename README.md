@@ -2,7 +2,7 @@
 **Edward Rolf Tufte makes it [visual](https://en.wikipedia.org/wiki/Edward_Tufte#Infographic_work), Donald Ervin Knuth makes it [elegant](https://en.wikipedia.org/wiki/Donald_Knuth#Digital_typesetting).**
 
 ![A pin-up that represents the tufte-python blogging community](img/tufte-latex-style-blog-template.png)
- *Tuftie – more than just dash of élégance.*
+<br>*Tuftie – more than just dash of élégance.*
 
 > On a sunny summer day, I like to read outside. Not in the sun. It is too *bright*. I prefer the shade under a tree. 
 > This static site generator is a tribute to moments like these. Moments when your mind is free and can make you feel, all at once, that you are learning and enjoying beauty. If you crave for a place on the internet where expression can be minimal and elegant without being cold, then, this may be the right corner for you.
