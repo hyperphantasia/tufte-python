@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ site.title | escape }}</title>
+    <description>{{ site.description | escape }}</description>
+    <link>{{ site.url }}{{ site.baseurl }}/</link>
+    <atom:link href="{{ site.url }}{{ site.baseurl }}/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>{{ now | rfc822 }}</pubDate>
+    <lastBuildDate>{{ now | rfc822 }}</lastBuildDate>
+    <generator>tufte-python</generator>
+    {% for post in posts[:10] %}
+    <item>
+      <title>{{ post.title | escape }}</title>
+      <description>{{ post.content_html | escape }}</description>
+      <pubDate>{{ post.date | rfc822 }}</pubDate>
+      <link>{{ site.url }}{{ site.baseurl }}{{ post.url }}</link>
+      <guid isPermaLink="true">{{ site.url }}{{ site.baseurl }}{{ post.url }}</guid>
+      {% for tag in post.tags %}
+      <category>{{ tag | escape }}</category>
+      {% endfor %}
+      {% for cat in post.categories %}
+      <category>{{ cat | escape }}</category>
+      {% endfor %}
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

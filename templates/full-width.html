@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "partials/head.html" %}
+
+<body class="full-width{% if site.options.justify_text %} justify{% endif %}">
+    {% include "partials/header.html" %}
+    <article>
+        {{ content }}
+    </article>
+    {% include "partials/print-footer.html" %}
+    {% include "partials/footer.html" %}
+</body>
+
+</html>

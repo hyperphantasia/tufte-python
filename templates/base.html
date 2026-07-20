@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "partials/head.html" %}
+<body{% if site.options.justify_text %} class="justify" {% endif %}>
+    {% include "partials/header.html" %}
+    <article class="group">
+        {{ content }}
+    </article>
+    {% include "partials/print-footer.html" %}
+    {% include "partials/footer.html" %}
+    </body>
+
+</html>

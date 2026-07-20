@@ -1,0 +1,51 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        if (stored === "light" || stored === "dark") {
+          document.documentElement.setAttribute("data-theme", stored);
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <title>{% if page and page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ site.description }}">
+
+  {% if site.options.lato_font_load %}
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,400italic" rel="stylesheet" type="text/css">
+  {% endif %}
+
+  {% if site.options.mathjax %}
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]]
+      },
+      options: {
+        ignoreHtmlClass: "tex2jax_ignore",
+        processHtmlClass: "tex2jax_process"
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {% endif %}
+
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/tufte.css">
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/theme.css">
+
+  {% if site.theme_supports_toggle %}
+  <script src="{{ site.baseurl }}/js/theme-toggle.js" defer></script>
+  {% endif %}
+
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url if page else '/' }}">
+
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}"
+    href="{{ site.url }}{{ site.baseurl }}/feed.xml" />
+</head>

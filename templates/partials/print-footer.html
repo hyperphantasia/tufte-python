@@ -1,0 +1,2 @@
+<span class="print-footer">{% if page and page.date %}{{ page.title }} - {{ page.date | dateformat }} - {{ site.author
+    }}{% else %}{{ page.title if page else site.title }} - {{ site.author }}{% endif %}</span>

@@ -1,0 +1,18 @@
+<footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:{{ site.email }}"><span class="icon-mail3"></span></a></li>
+    {% for entry in site.social %}
+    <li>
+      <a href="{{ entry.link }}"><span class="{{ entry.icon }}"></span></a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="credits">
+    <span>&copy; {{ now.year }}&nbsp;&nbsp;{{ site.author | upper }}</span><br>
+    <span>Made without [iħ ∂/∂t Ψ = Ĥ Ψ] but powered by <a
+        href="https://github.com/hyperphantasia/tufte-python">tufte-python</a></span><br>
+    <span> Designed for {{
+      site.subtitle }}</span><br>
+  </div>
+</footer>

@@ -1,0 +1,54 @@
+# Site-wide configuration.
+title: tufte-python
+subtitle: elegant & minimalist blogging.
+author: Your Name
+email: you@example.com
+description: A Tufte styled static site, inspired by LaTeX academic papers and generated with Python
+
+# The full domain the site is served from, no trailing slash.
+# e.g. https://yourusername.github.io
+url: "https://hyperphantasia.github.io"
+
+# The sub-path the site is served under, no trailing slash.
+# Leave blank ("") for a user/organization page (yourusername.github.io) or a
+# custom domain. Set to "/reponame" for a project page
+# (yourusername.github.io/reponame).
+baseurl: "/tufte-python"
+
+# Permalink pattern for posts. Available placeholders:
+#   {short_year} {year} {month} {day} {slug}
+permalink: "/articles/{year}/{slug}/"
+
+# Title shown in the nav bar for the home/blog-index page.
+index_title: blog
+
+# Path (relative to baseurl) to the badge image shown in the header.
+badge_image: assets/img/python_simple_blog_logo.png
+
+# Color theme. One of the files in static/css/themes/, without the .css
+# extension:
+#   solarized                  (light + dark, follows system/toggle)
+#   solAArized                 (light + dark, follows system/toggle)
+#   solarized-rainbow          (light + dark, follows system/toggle) / Experimental
+#   dracula                    (light "Alucard" + dark "Dracula", follows system/toggle)
+#   gradianto-nature-green     (dark only)
+#   gradianto-dark-fuchsia     (dark only)
+#   gradianto-deep-ocean       (dark only)
+#   gradianto-midnight-blue    (dark only)
+#   gradianto-ultra-light      (light only)
+theme: solAArized
+
+options:
+  mathjax: true
+  lato_font_load: true
+  justify_text: true
+
+social:
+  - link: "//www.linkedin.com/"
+    icon: icon-linkedin
+  - link: "//github.com/hyperphantasia"
+    icon: icon-github
+  - link: "//www.flickr.com/photos/your_flickr_handle"
+    icon: icon-flickr3
+  - link: "/feed.xml"
+    icon: icon-rss2

@@ -1,0 +1,34 @@
+<!-- Header and nav template site-wide -->
+<header>
+  <nav class="group">
+    <a href="{{ site.baseurl }}/"><img class="badge" src="{{ site.baseurl }}/{{ site.badge_image }}"
+        alt="{{ site.author }}"></a>
+    {% for item in site.nav_items %}
+    {% if page and page.url == item.url %}
+    <a class="active" href="{{ site.baseurl }}{{ item.url }}">{{ item.title }}</a>
+    {% else %}
+    <a href="{{ site.baseurl }}{{ item.url }}">{{ item.title }}</a>
+    {% endif %}
+    {% endfor %}
+    {% if site.theme_supports_toggle %}
+    <button type="button" id="theme-switch" class="theme-switch" aria-pressed="false"
+      aria-label="Switch between light and dark mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round">
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
+    </button>
+    {% endif %}
+  </nav>
+</header>
