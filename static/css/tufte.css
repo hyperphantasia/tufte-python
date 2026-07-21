@@ -550,7 +550,7 @@ pre code,
 p code,
 p pre code {
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   line-height: 1.71428571;
   margin-top: 1.71428571rem;
 }

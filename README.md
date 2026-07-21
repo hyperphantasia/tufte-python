@@ -144,7 +144,7 @@ Each `unique-id` just needs to be unique within a single page.
 **Code snippets** (use backticks):  
 ![Screenshot of a github dev blog template showing an inline code snippet using backticks](img/code-snippet-blog-markdown.png)
 
-More [possibilities](https://hyperphantasia.github.io/tufte-python/articles/2026/tufte-style-python-blog) and [edge-cases](https://hyperphantasia.github.io/tufte-python/articles/2026/Edge-Cases) are handled as well.
+More [possibilities](https://hyperphantasia.github.io/tufte-python/articles/2026/tufte-style-python-blog) and [edge-cases](https://hyperphantasia.github.io/tufte-python/articles/2026/edge-cases) are handled as well.
 
 ## Site configuration
 

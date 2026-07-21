@@ -82,7 +82,13 @@ $$
 
 Note that inline matrices need a bit of extra care, for example [here](https://en.wikibooks.org/wiki/LaTeX/Mathematics#Matrices_in_running_text):
 
-To not increase leading in a portion of text, a matrix in text must be set smaller: $$ \bigl(\begin{smallmatrix}a & b \\ c & d\end{smallmatrix} \bigr) $$ The way this inline matrix is written is: `$$ \bigl(\begin{smallmatrix}a & b \\ c & d\end{smallmatrix} \bigr) $$`
+To not increase leading in a portion of text, a matrix in text must be set smaller: 
+
+$$ \bigl(\begin{smallmatrix}a & b \\ c & d\end{smallmatrix} \bigr) $$ 
+
+The way this inline matrix is written is: 
+
+`$$ \bigl(\begin{smallmatrix}a & b \\ c & d\end{smallmatrix} \bigr) $$`
 
 ## Edge Case 1: list formatting
 
@@ -166,9 +172,9 @@ This Python port is actually *less* fiddly than the Jekyll original it grew from
 The other half of the puzzle is arguments *with* real quote characters in them, like an `<a href="...">` tag embedded in a caption. Shortcode arguments are parsed the same forgiving way a Unix shell parses a quoted command line (via Python's `shlex`): wrap an argument in double quotes and a backslash-escaped `\"` inside it becomes a literal `"`, and an apostrophe inside it (like Tufte'**s**) needs no special handling at all, since it isn't the character being used to delimit the argument. So this:
 
 ```text
-{% fullwidth "assets/img/rhino.png" "Tufte's pet rhino (via <a href=\"//www.edwardtufte.com/tufte/\">Edward Tufte</a>)" %}
+{% fullwidth "assets/img/napoleons-march.png" "Napoleon's March (via <a href=\"//www.edwardtufte.com/tufte/\">Edward Tufte</a>)" %}
 ```
 
 produces the following image with a link in its caption, apostrophe and all, with none of the "escaping the escapes" gymnastics the original needed:
 
-{% fullwidth "assets/img/rhino.png" "Tufte's pet rhino (via <a href=\"//www.edwardtufte.com/tufte/\">Edward Tufte</a>)" %}
+{% fullwidth "assets/img/napoleons-march.png" "Napoleon's March (via <a href=\"//www.edwardtufte.com/tufte/\">Edward Tufte</a>)" %}
