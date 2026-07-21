@@ -11,7 +11,8 @@
 """Site building and rendering pipeline for the static site generator.
 
 This module loads content, renders markdown and templates, writes output
-files, and copies static assets into the built site directory.
+files, and copies static assets into the built site directory. Supports
+incremental builds through caching.
 """
 # =============================================================================
 
@@ -24,6 +25,7 @@ from typing import Any
 
 import jinja2
 
+from . import cache as cache_mod
 from . import content as content_mod
 from . import markdown_render
 from .config import load_config
@@ -47,6 +49,7 @@ def dateformat(value: datetime | None, fmt: str = "%B %-d, %Y") -> str:
     """
     if value is None:
         return ""
+    # %-d isn't portable (fails on some libc); build it by hand instead.
     return f"{MONTHS[value.month - 1]} {value.day}, {value.year}"
 
 
@@ -67,7 +70,7 @@ def rfc822(value: datetime | None) -> str:
 class Site:
     """Build and render a static site from content and templates."""
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path) -> None:
         """Initialize a site builder.
 
         Args:
@@ -92,8 +95,13 @@ class Site:
         self.posts: list[content_mod.Document] = []
         self.pages: list[content_mod.Document] = []
 
+    # -- content pipeline --------------------------------------------------
+
     def _render_body(self, doc: content_mod.Document) -> None:
         """Render a document's markdown body and excerpt to HTML.
+
+        Expands shortcodes and converts markdown in the same order Jekyll
+        does (Liquid, then Kramdown).
 
         Args:
             doc: Document to render.
@@ -133,17 +141,22 @@ class Site:
         return url
 
     def load_content(self) -> None:
-        """Discover, load, and render all content documents."""
+        """Discover posts/pages and compute their URLs.
+
+        Cheap operation that just parses front matter and filenames.
+        Does NOT run shortcode expansion or Markdown conversion, so it's
+        safe to call this unconditionally even during an incremental build.
+        """
         self.posts = content_mod.discover_posts(self.content_dir / "posts")
         self.pages = content_mod.discover_pages(self.content_dir / "pages")
 
         for post in self.posts:
             post.url = self._permalink_for(post)
-            self._render_body(post)
 
         for page in self.pages:
             page.url = f"/{page.slug}/"
-            self._render_body(page)
+
+    # -- layout chain --------------------------------------------------
 
     LAYOUT_TEMPLATE_FILES = {
         "post": "post.html",
@@ -188,6 +201,8 @@ class Site:
             name = self.LAYOUT_PARENTS.get(name)
         return html
 
+    # -- site-wide template context --------------------------------------------------
+
     def nav_items(self) -> list[dict]:
         """Return navigation items for the site."""
         items = [{"title": self.config["index_title"], "url": "/"}]
@@ -216,6 +231,21 @@ class Site:
             "theme_supports_toggle": theme_name in self.TOGGLE_CAPABLE_THEMES,
         }
 
+    # -- output helpers --------------------------------------------------
+
+    def _output_file_for(self, url_path: str) -> Path:
+        """Compute the output file path for a given URL path.
+
+        Args:
+            url_path: Site-relative URL path.
+
+        Returns:
+            The filesystem path where this URL's output should be written.
+        """
+        if url_path == "/":
+            return self.out_dir / "index.html"
+        return self.out_dir / url_path.strip("/") / "index.html"
+
     def _write(self, url_path: str, html: str) -> None:
         """Write rendered HTML to the output directory.
 
@@ -223,26 +253,78 @@ class Site:
             url_path: Site-relative URL path.
             html: HTML content to write.
         """
-        if url_path == "/":
-            out_file = self.out_dir / "index.html"
-        else:
-            out_file = self.out_dir / url_path.strip("/") / "index.html"
+        out_file = self._output_file_for(url_path)
         out_file.parent.mkdir(parents=True, exist_ok=True)
         out_file.write_text(html, encoding="utf-8")
 
-    def build_posts(self) -> None:
-        """Render and write all posts."""
-        for post in self.posts:
-            html = self.render_through_layout(
-                post.layout, post.content_html, post)
-            self._write(post.url, html)
+    def render_documents(self, cache: dict, force: bool) -> dict[str, dict]:
+        """Render (or reuse from cache) every post/page.
 
-    def build_pages(self) -> None:
-        """Render and write all pages."""
-        for page in self.pages:
-            html = self.render_through_layout(
-                page.layout, page.content_html, page)
-            self._write(page.url, html)
+        A document is re-rendered (the expensive shortcode+Markdown pass)
+        only if `force` is set, its source file's mtime changed, it's new,
+        or its output file has gone missing (otherwise its previously-
+        rendered HTML is reused both for its own page and for the index/
+        feed, which need every post's content regardless of what changed
+        this run).
+
+        Args:
+            cache: The persisted cache dict from a previous build.
+            force: If True, force re-render of all documents.
+
+        Returns:
+            The new per-document cache entries to persist.
+        """
+        cached_docs = cache.get("docs", {})
+        new_cache: dict[str, dict] = {}
+        rendered_count = 0
+        skipped_count = 0
+
+        for doc in self.posts + self.pages:
+            key = str(doc.source_path.relative_to(self.root))
+            mtime = doc.source_path.stat().st_mtime
+            out_file = self._output_file_for(doc.url)
+            cached = cached_docs.get(key)
+
+            needs_render = (
+                force
+                or cached is None
+                or cached.get("mtime") != mtime
+                or cached.get("url") != doc.url
+                or not out_file.exists()
+            )
+
+            if needs_render:
+                self._render_body(doc)
+                html = self.render_through_layout(
+                    doc.layout, doc.content_html, doc)
+                self._write(doc.url, html)
+                rendered_count += 1
+            else:
+                doc.content_html = cached["content_html"]
+                doc.excerpt_html = cached["excerpt_html"]
+                skipped_count += 1
+
+            new_cache[key] = {
+                "mtime": mtime,
+                "url": doc.url,
+                "content_html": doc.content_html,
+                "excerpt_html": doc.excerpt_html,
+            }
+
+        # Source files that existed last build but are gone now -- remove
+        # their stale output rather than leaving orphaned pages on disk.
+        removed_keys = set(cached_docs) - set(new_cache)
+        for key in removed_keys:
+            old_url = cached_docs[key].get("url")
+            if not old_url:
+                continue
+            stale_file = self._output_file_for(old_url)
+            if stale_file.exists():
+                shutil.rmtree(stale_file.parent, ignore_errors=True)
+
+        print(
+            f"Rendered {rendered_count} page(s), reused {skipped_count} unchanged, removed {len(removed_keys)} stale.")
+        return new_cache
 
     def build_index(self) -> None:
         """Render and write the home page."""
@@ -264,12 +346,54 @@ class Site:
         out_file.parent.mkdir(parents=True, exist_ok=True)
         out_file.write_text(xml, encoding="utf-8")
 
-    TOGGLE_CAPABLE_THEMES = {"solarized",
-                             "solAArized", "solarized-rainbow", "dracula"}
+    # -- static assets --------------------------------------------------
+
+    TOGGLE_CAPABLE_THEMES = {"solarized", "dracula",
+                             "solarized-rainbow", "solAArized"}
 
     def _theme_name(self) -> str:
         """Return the configured theme name."""
         return self.config["theme"]
+
+    def _copy_file_if_newer(self, src: Path, dst: Path) -> None:
+        """Copy a file only if the destination is missing, older, or differs in size.
+
+        Args:
+            src: Source file path.
+            dst: Destination file path.
+        """
+        if dst.exists() and dst.stat().st_mtime >= src.stat().st_mtime and dst.stat().st_size == src.stat().st_size:
+            return
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+
+    def _copytree_incremental(self, src_dir: Path, dst_dir: Path) -> None:
+        """Copy a directory tree, only touching new or changed files.
+
+        Like shutil.copytree(dirs_exist_ok=True), but only copies files
+        that are new or changed, and removes files under dst_dir that no
+        longer exist under src_dir. For large asset trees (image-heavy
+        blogs especially) this avoids re-copying everything on every build.
+
+        Args:
+            src_dir: Source directory path.
+            dst_dir: Destination directory path.
+        """
+        dst_dir.mkdir(parents=True, exist_ok=True)
+        src_files = set()
+        for src_file in src_dir.rglob("*"):
+            if not src_file.is_file():
+                continue
+            rel = src_file.relative_to(src_dir)
+            src_files.add(rel)
+            self._copy_file_if_newer(src_file, dst_dir / rel)
+
+        for dst_file in dst_dir.rglob("*"):
+            if not dst_file.is_file():
+                continue
+            rel = dst_file.relative_to(dst_dir)
+            if rel not in src_files:
+                dst_file.unlink()
 
     def copy_static(self) -> None:
         """Copy static assets into the output directory."""
@@ -278,24 +402,24 @@ class Site:
         css_src = self.static_dir / "css"
         js_src = self.static_dir / "js"
         if fonts_src.exists():
-            shutil.copytree(fonts_src, self.out_dir /
-                            "fonts", dirs_exist_ok=True)
+            self._copytree_incremental(fonts_src, self.out_dir / "fonts")
         if img_src.exists():
-            shutil.copytree(img_src, self.out_dir /
-                            "assets" / "img", dirs_exist_ok=True)
+            self._copytree_incremental(
+                img_src, self.out_dir / "assets" / "img")
         if js_src.exists():
-            shutil.copytree(js_src, self.out_dir / "js", dirs_exist_ok=True)
+            self._copytree_incremental(js_src, self.out_dir / "js")
         if css_src.exists():
+            # Copy everything except the themes/ folder -- only the
+            # selected theme (below) ships in the built output.
             css_out = self.out_dir / "css"
             css_out.mkdir(parents=True, exist_ok=True)
             for item in css_src.iterdir():
                 if item.name == "themes":
                     continue
                 if item.is_file():
-                    shutil.copy2(item, css_out / item.name)
+                    self._copy_file_if_newer(item, css_out / item.name)
                 else:
-                    shutil.copytree(item, css_out / item.name,
-                                    dirs_exist_ok=True)
+                    self._copytree_incremental(item, css_out / item.name)
 
         theme_name = self._theme_name()
         theme_src = self.static_dir / "css" / "themes" / f"{theme_name}.css"
@@ -306,21 +430,48 @@ class Site:
                 f"config.yml sets theme: {theme_name!r}, but static/css/themes/{theme_name}.css "
                 f"doesn't exist. Available themes: {', '.join(available)}"
             )
-        shutil.copy2(theme_src, self.out_dir / "css" / "theme.css")
+        self._copy_file_if_newer(theme_src, self.out_dir / "css" / "theme.css")
 
-    def build(self, clean: bool = True) -> None:
-        """Build the full site.
+    # -- top-level build --------------------------------------------------
+
+    def build(self, force: bool = False) -> None:
+        """Build the site.
+
+        By default this is incremental: a post/page is only re-rendered if
+        its source file changed, is new, or its output is missing. Editing
+        a template, config.yml, or the generator's own code invalidates
+        everything and triggers a full rebuild automatically. Pass
+        force=True to always do a full rebuild regardless (if you
+        don't trust the cache for some reason). A fresh checkout (no _site/,
+        no cache file, as in CI) always does a full build too, since
+        there's nothing to reuse.
 
         Args:
-            clean: If true, delete the existing output directory first.
+            force: If True, force a full rebuild regardless of cache state.
         """
-        if clean and self.out_dir.exists():
+        cache = cache_mod.load(self.root)
+        current_global_mtime = cache_mod.global_mtime(self.root)
+        full_rebuild = (
+            force
+            or not self.out_dir.exists()
+            or cache["global_mtime"] != current_global_mtime
+        )
+
+        if full_rebuild and self.out_dir.exists():
             shutil.rmtree(self.out_dir)
         self.out_dir.mkdir(parents=True, exist_ok=True)
 
+        if full_rebuild:
+            reason = "forced" if force else (
+                "no previous build" if not cache["docs"] else "templates/config/code changed")
+            print(f"Full rebuild ({reason}).")
+            cache = cache_mod.empty()
+
         self.load_content()
-        self.build_posts()
-        self.build_pages()
+        new_doc_cache = self.render_documents(cache, force=full_rebuild)
+
         self.build_index()
         self.build_feed()
         self.copy_static()
+
+        cache_mod.save(self.root, new_doc_cache)

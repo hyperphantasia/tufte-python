@@ -12,7 +12,8 @@
 """Build (and optionally serve) the site.
 
 Usage:
-    python build.py                     # build once into _site/ (uses config.yml's real baseurl)
+    python build.py                     # incremental build into _site/ (uses config.yml's real baseurl)
+    python build.py --force              # ignore the build cache, re-render everything
     python build.py --serve             # build + serve at :8000 (baseurl blanked out for local links)
     python build.py --serve --watch     # also rebuild automatically on file changes
     python build.py --serve --production-urls  # serve with the real baseurl, to sanity-check it before deploying
@@ -58,17 +59,18 @@ def _mtime_fingerprint(root: Path) -> float:
     return latest
 
 
-def build(root: Path) -> Site:
+def build(root: Path, force: bool = False) -> Site:
     """Build the site for the given project root.
 
     Args:
         root: Project root directory.
+        force: If true, ignore the build cache and re-render everything from scratch.
 
     Returns:
         The built `Site` instance.
     """
     site = Site(root)
-    site.build()
+    site.build(force=force)
     print(f"Built site into {site.out_dir}")
     return site
 
@@ -76,9 +78,10 @@ def build(root: Path) -> Site:
 class _BaseurlHandler(http.server.SimpleHTTPRequestHandler):
     """Serve a site under a base URL path.
 
-    This serves `directory` under `baseurl` (for example, "/reponame") and
-    returns 404 for anything outside that prefix. It mirrors GitHub Pages
-    project-site behavior so production URLs can be tested locally.
+    Serves `directory` under `baseurl` (e.g. "/reponame") and returns 404 for
+    anything outside it. This mirrors how GitHub Pages actually serves a
+    project site, so --production-urls can be tested locally instead of just
+    reproducing 404s.
     """
 
     baseurl: str = ""  # set via functools.partial before use
@@ -101,7 +104,7 @@ class _BaseurlHandler(http.server.SimpleHTTPRequestHandler):
         return super().translate_path(path)
 
 
-def serve(root: Path, port: int, watch: bool, production_urls: bool) -> None:
+def serve(root: Path, port: int, watch: bool, production_urls: bool, force: bool) -> None:
     """Build and serve the site, optionally rebuilding on changes.
 
     Args:
@@ -109,11 +112,19 @@ def serve(root: Path, port: int, watch: bool, production_urls: bool) -> None:
         port: TCP port to bind.
         watch: If true, rebuild when source files change.
         production_urls: If true, serve under the configured base URL path.
+        force: If true, ignore the build cache and re-render everything from scratch.
     """
     if not production_urls and "TUFTE_BASEURL" not in os.environ:
+        # Local preview: the dev server always serves _site/ at the domain
+        # root, but config.yml's baseurl is normally a sub-path meant for
+        # the real deployment (e.g. "/reponame" for a GitHub Pages project
+        # site). Without this, every internal link and the CSS itself would
+        # 404 locally. Pass --production-urls to test against the real
+        # baseurl instead (the server then mounts the site under that
+        # sub-path, same as GitHub Pages does).
         os.environ["TUFTE_BASEURL"] = ""
 
-    site = build(root)
+    site = build(root, force=force)
     baseurl = site.config["baseurl"]
 
     if production_urls and baseurl:
@@ -150,7 +161,7 @@ def serve(root: Path, port: int, watch: bool, production_urls: bool) -> None:
                 last = current
                 print("Change detected, rebuilding...")
                 try:
-                    build(root)
+                    build(root, force=force)
                 except Exception as exc:  # noqa: BLE001
                     print(f"Build failed: {exc}")
     except KeyboardInterrupt:
@@ -172,14 +183,19 @@ def main() -> None:
         action="store_true",
         help="use the real baseurl from config.yml while serving, instead of blanking it out for local preview",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="ignore the incremental build cache and re-render everything from scratch",
+    )
     args = parser.parse_args()
 
     root = Path(__file__).parent
 
     if args.serve or args.watch:
-        serve(root, args.port, args.watch, args.production_urls)
+        serve(root, args.port, args.watch, args.production_urls, args.force)
     else:
-        build(root)
+        build(root, force=args.force)
 
 
 if __name__ == "__main__":

@@ -57,6 +57,21 @@ python build.py --serve --production-urls
 
 A plain `python build.py` (no `--serve`) always uses the real `baseurl` from `config.yml` so it's ready for the GitHub Actions workflow runs.
 
+## Incremental builds
+
+Builds are incremental by default: a post or page is only re-rendered (shortcode expansion + Markdown conversion is the expensive part) if its own source file is **new**, **changed**, or its output has gone **missing**. This matters once a blog has more than a handful of posts, since re-rendering everything on every build stops scaling.
+
+Editing a template, `config.yml`, or the generator's own code (`tufte_ssg/`) invalidates the *entire* cache and triggers one full rebuild automatically. Those can change how every page looks, so there's no safe way to build only "the changed part" when one of them changes. A fresh checkout (no `_site/`, no cache file, exactly what CI gets on every run) always does a full build too, since there's nothing to reuse yet.
+
+```bash
+python build.py            # incremental (the default)
+python build.py --force    # ignore the cache, re-render everything
+```
+
+Deleting a post's source file removes its output on the next build rather than leaving it orphaned in `_site/`. Static assets (`static/fonts`, `static/img`, `static/js`, `static/css`) are copied incrementally too. Only new or changed files are touched, so an image-heavy blog doesn't re-copy its whole media library on every build.
+
+The cache lives in `.tufte_cache.json` at the project root (already in `.gitignore`. It's a local build artifact, not something to commit or share between machines).
+
 ## Writing content
 
 ### Posts
@@ -269,6 +284,7 @@ To enable it:
 │   └── img/                    # static assets, copied as-is
 ├── tufte_ssg/                  # the generator itself
 ├── build.py                    # CLI: build / serve / watch
+├── .tufte_cache.json           # Incremental build cache (gitignored, auto-created)
 └── .github/workflows/          # GitHub Actions CI/CD
 ```
 
