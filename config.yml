@@ -1,7 +1,7 @@
 # Site-wide configuration.
 title: tufte-python
 subtitle: elegant & minimalist blogging.
-author: hyperphantasia
+author: ❧ # Your name
 email: you@example.com
 description: A Tufte styled static site, inspired by LaTeX academic papers and generated with Python
 
