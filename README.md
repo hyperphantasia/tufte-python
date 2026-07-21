@@ -23,6 +23,7 @@
 - [tufte-python](#tufte-python)
   - [Demo](#demo)
   - [Quick start](#quick-start)
+  - [Incremental builds](#incremental-builds)
   - [Writing content](#writing-content)
     - [Posts](#posts)
     - [Pages](#pages)
