@@ -1,4 +1,6 @@
 # tufte-python
+[![Build and deploy site](https://github.com/hyperphantasia/tufte-python/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyperphantasia/tufte-python/actions/workflows/deploy.yml)
+
 **Edward Rolf Tufte makes it [visual](https://en.wikipedia.org/wiki/Edward_Tufte#Infographic_work), Donald Ervin Knuth makes it [elegant](https://en.wikipedia.org/wiki/Donald_Knuth#Digital_typesetting).**
 
 ![A pin-up that represents the tufte-python blogging community](img/tufte-latex-style-blog-template.png)
