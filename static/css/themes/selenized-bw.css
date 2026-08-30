@@ -1,0 +1,89 @@
+/*
+ * Theme: Selenized (black & white)
+ * Based on the official Selenized palette by Jan Warchoł
+ * (https://github.com/jan-warchol/selenized), black & white variants.
+ * Color values are the canonical sRGB values from the-values.md.
+ *
+ * Same variable API as selenized.css, so it can be swapped in as a
+ * drop-in alternate theme. Supports the system `prefers-color-scheme`
+ * by default, and can be overridden explicitly via
+ * [data-theme="light"|"dark"] on <html> (see
+ * templates/partials/theme-toggle.html). "light" -> white, "dark" -> black.
+ */
+:root {
+  /* -- Selenized white -- */
+  --selenized-bw-bg-0: #ffffff;
+  --selenized-bw-bg-1: #ebebeb;
+  --selenized-bw-bg-2: #cdcdcd;
+  --selenized-bw-dim: #878787;
+  --selenized-bw-fg-0: #474747;
+  --selenized-bw-fg-1: #282828;
+  --selenized-bw-red: #d6000c;
+  --selenized-bw-green: #1d9700;
+  --selenized-bw-yellow: #c49700;
+  --selenized-bw-blue: #0064e4;
+  --selenized-bw-magenta: #dd0f9d;
+  --selenized-bw-cyan: #00ad9c;
+  --selenized-bw-orange: #d04a00;
+  --selenized-bw-violet: #7f51d6;
+  --color-bg: var(--selenized-bw-bg-0);
+  --color-text: var(--selenized-bw-fg-0);
+  --color-link: var(--selenized-bw-magenta);
+  --color-border: var(--selenized-bw-dim);
+  --color-border-muted: var(--selenized-bw-bg-2);
+  --color-border-subtle: var(--selenized-bw-bg-2);
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--selenized-bw-dim);
+  --syn-keyword: var(--selenized-bw-magenta);
+  --syn-string: var(--selenized-bw-yellow);
+  --syn-string-special: var(--selenized-bw-violet);
+  --syn-number: var(--selenized-bw-blue);
+  --syn-name: var(--selenized-bw-green);
+  --syn-type: var(--selenized-bw-cyan);
+  --syn-function: var(--selenized-bw-green);
+  --syn-namespace: var(--selenized-bw-dim);
+  --syn-entity: var(--selenized-bw-orange);
+  --syn-error-fg: var(--selenized-bw-bg-0);
+  --syn-error-bg: var(--selenized-bw-red);
+  --syn-diff-add-fg: var(--selenized-bw-bg-0);
+  --syn-diff-add-bg: var(--selenized-bw-green);
+  --syn-diff-del-fg: var(--selenized-bw-bg-0);
+  --syn-diff-del-bg: var(--selenized-bw-red);
+  --syn-generic: var(--selenized-bw-dim);
+  --toggle-supported: 1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* -- Selenized black -- */
+    --selenized-bw-bg-0: #181818;
+    --selenized-bw-bg-1: #252525;
+    --selenized-bw-bg-2: #3b3b3b;
+    --selenized-bw-dim: #777777;
+    --selenized-bw-fg-0: #b9b9b9;
+    --selenized-bw-fg-1: #dedede;
+    --selenized-bw-red: #ed4a46;
+    --selenized-bw-green: #70b433;
+    --selenized-bw-yellow: #dbb32d;
+    --selenized-bw-blue: #368aeb;
+    --selenized-bw-magenta: #eb6eb7;
+    --selenized-bw-cyan: #3fc5b7;
+    --selenized-bw-orange: #e67f43;
+    --selenized-bw-violet: #a580e2;
+  }
+}
+:root[data-theme="dark"] {
+  --selenized-bw-bg-0: #181818;
+  --selenized-bw-bg-1: #252525;
+  --selenized-bw-bg-2: #3b3b3b;
+  --selenized-bw-dim: #777777;
+  --selenized-bw-fg-0: #b9b9b9;
+  --selenized-bw-fg-1: #dedede;
+  --selenized-bw-red: #ed4a46;
+  --selenized-bw-green: #70b433;
+  --selenized-bw-yellow: #dbb32d;
+  --selenized-bw-blue: #368aeb;
+  --selenized-bw-magenta: #eb6eb7;
+  --selenized-bw-cyan: #3fc5b7;
+  --selenized-bw-orange: #e67f43;
+  --selenized-bw-violet: #a580e2;
+}

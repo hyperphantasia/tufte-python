@@ -1,0 +1,87 @@
+/*
+ * Theme: Selenized
+ * Based on the official Selenized palette by Jan Warchoł
+ * (https://github.com/jan-warchol/selenized), dark & light variants.
+ * Color values are the canonical sRGB values from the-values.md.
+ *
+ * Supports the system `prefers-color-scheme` by default, and can be
+ * overridden explicitly via [data-theme="light"|"dark"] on <html> (see
+ * templates/partials/theme-toggle.html).
+ */
+:root {
+  /* -- Selenized light -- */
+  --selenized-bg-0: #fbf3db;
+  --selenized-bg-1: #ece3cc;
+  --selenized-bg-2: #d5cdb6;
+  --selenized-dim: #909995;
+  --selenized-fg-0: #53676d;
+  --selenized-fg-1: #3a4d53;
+  --selenized-red: #d2212d;
+  --selenized-green: #489100;
+  --selenized-yellow: #ad8900;
+  --selenized-blue: #0072d4;
+  --selenized-magenta: #ca4898;
+  --selenized-cyan: #009c8f;
+  --selenized-orange: #c25d1e;
+  --selenized-violet: #8762c6;
+  --color-bg: var(--selenized-bg-0);
+  --color-text: var(--selenized-fg-0);
+  --color-link: var(--selenized-magenta);
+  --color-border: var(--selenized-dim);
+  --color-border-muted: var(--selenized-bg-2);
+  --color-border-subtle: var(--selenized-bg-2);
+  --syn-bg: var(--color-bg);
+  --syn-comment: var(--selenized-dim);
+  --syn-keyword: var(--selenized-magenta);
+  --syn-string: var(--selenized-yellow);
+  --syn-string-special: var(--selenized-violet);
+  --syn-number: var(--selenized-blue);
+  --syn-name: var(--selenized-green);
+  --syn-type: var(--selenized-cyan);
+  --syn-function: var(--selenized-green);
+  --syn-namespace: var(--selenized-dim);
+  --syn-entity: var(--selenized-orange);
+  --syn-error-fg: var(--selenized-bg-0);
+  --syn-error-bg: var(--selenized-red);
+  --syn-diff-add-fg: var(--selenized-bg-0);
+  --syn-diff-add-bg: var(--selenized-green);
+  --syn-diff-del-fg: var(--selenized-bg-0);
+  --syn-diff-del-bg: var(--selenized-red);
+  --syn-generic: var(--selenized-dim);
+  --toggle-supported: 1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* -- Selenized dark -- */
+    --selenized-bg-0: #103c48;
+    --selenized-bg-1: #184956;
+    --selenized-bg-2: #2d5b69;
+    --selenized-dim: #72898f;
+    --selenized-fg-0: #adbcbc;
+    --selenized-fg-1: #cad8d9;
+    --selenized-red: #fa5750;
+    --selenized-green: #75b938;
+    --selenized-yellow: #dbb32d;
+    --selenized-blue: #4695f7;
+    --selenized-magenta: #f275be;
+    --selenized-cyan: #41c7b9;
+    --selenized-orange: #ed8649;
+    --selenized-violet: #af88eb;
+  }
+}
+:root[data-theme="dark"] {
+  --selenized-bg-0: #103c48;
+  --selenized-bg-1: #184956;
+  --selenized-bg-2: #2d5b69;
+  --selenized-dim: #72898f;
+  --selenized-fg-0: #adbcbc;
+  --selenized-fg-1: #cad8d9;
+  --selenized-red: #fa5750;
+  --selenized-green: #75b938;
+  --selenized-yellow: #dbb32d;
+  --selenized-blue: #4695f7;
+  --selenized-magenta: #f275be;
+  --selenized-cyan: #41c7b9;
+  --selenized-orange: #ed8649;
+  --selenized-violet: #af88eb;
+}
