@@ -1,4 +1,5 @@
 # tufte-python
+
 [![Build and deploy site](https://github.com/hyperphantasia/tufte-python/actions/workflows/deploy.yml/badge.svg)](https://github.com/hyperphantasia/tufte-python/actions/workflows/deploy.yml)
 
 **Edward Rolf Tufte makes it [visual](https://en.wikipedia.org/wiki/Edward_Tufte#Infographic_work), Donald Ervin Knuth makes it [elegant](https://en.wikipedia.org/wiki/Donald_Knuth#Digital_typesetting).**
@@ -6,7 +7,7 @@
 ![A pin-up that represents the tufte-python blogging community](img/tufte-latex-style-blog-template.png)
 <br>*Tuftie – more than just dash of élégance.*
 
-> On a sunny summer day, I like to read outside. Not in the sun. It is too *bright*. I prefer the shade under a tree. 
+> On a sunny summer day, I like to read outside. Not in the sun. It is too *bright*. I prefer the shade under a tree.
 > This static site generator is a tribute to moments like these. Moments when your mind is free and can make you feel, all at once, that you are learning and enjoying beauty. If you crave for a place on the internet where expression can be minimal and elegant without being cold, then, this may be the right corner for you.
 
 [tufte-python](https://github.com/hyperphantasia/tufte-python) is a Python port of [tufte-jekyll](https://github.com/clayh53/tufte-jekyll). It provides that original academic paper LaTeX look & feel on a modern stack.
@@ -21,7 +22,7 @@
  <br>*A minimalistic Python powered blog. Live [demo](https://hyperphantasia.github.io/tufte-python).*
 
 > [!NOTE]
-> A hand-on tutorial is available on freeCodeCamp News! 
+> A hand-on tutorial is available on freeCodeCamp News!
 
 ## Table of content
 
@@ -53,6 +54,7 @@ python build.py --serve --watch   # also rebuild automatically on changes
 ```
 
 Note on `--serve`:
+
 - When you use `--serve`, it ignores the `baseurl` setting so links, images, and CSS work correctly on your computer. That’s because the local preview always runs from the main site address, not from a sub-folder.
 
 - To preview the site exactly as it'll look once deployed, including the real `baseurl`, use:
@@ -107,14 +109,14 @@ Posts are published at `/articles/{4-digit-year}/{slug}/` by default. This is **
 Pages are *structural*. They are standalone, timeless piece of content (like About or Contact).
 
 1. Add a Markdown file to `content/pages/` (e.g. `content/pages/contact.md`).
-2. It's published at `/{filename}/`. 
+2. It's published at `/{filename}/`.
 
 >[!TIP]
 >Set `layout: full-width` in its front matter for a wide layout (no sidenotes/margin notes), or leave it as `layout: page` for the standard column width.
 
 ### Content shortcodes
 
-Shortcodes are modeled after the [original theme's](https://clayh53.github.io/tufte-jekyll/articles/20/tufte-style-jekyll-blog) Liquid tags. 
+Shortcodes are modeled after the [original theme's](https://clayh53.github.io/tufte-jekyll/articles/20/tufte-style-jekyll-blog) Liquid tags.
 
 > [!NOTE]
 >Existing [tufte-jekyll](https://github.com/clayh53/tufte-jekyll/tree/master/_posts) posts can be dropped in unchanged:
@@ -132,6 +134,9 @@ Shortcodes are modeled after the [original theme's](https://clayh53.github.io/tu
 ```
 
 Each `unique-id` just needs to be unique within a single page.
+
+> [!NOTE]
+> To be processed correctly, links should always start with `https://`.
 
 #### Examples
 
@@ -184,7 +189,6 @@ social:
 
 The configuration is organized into **site metadata**, **URL settings**, **content routing**, **visual theme**, **feature toggles**, and **social media links**.
 
-
 | Option | Example value | Purpose |
 |--------|---------------|---------|
 | **title** | `tufte-python` | Main site title displayed in the header and metadata |
@@ -203,11 +207,10 @@ The configuration is organized into **site metadata**, **URL settings**, **conte
 | **justify_text** | `true` | Enable text justification in article content |
 | **social** | Array of objects | List of social media links with `link` (URL) and `icon` (icon class) properties |
 
-
 ## Theme
 
-`static/css/tufte.css` holds all the Tufte structure/typography rules and references colors only through CSS custom properties (`var(--color-text)`, `var(--syn-keyword)`, etc.). 
-It never *hardcodes* a color itself. 
+`static/css/tufte.css` holds all the Tufte structure/typography rules and references colors only through CSS custom properties (`var(--color-text)`, `var(--syn-keyword)`, etc.).
+It never *hardcodes* a color itself.
 
 The actual color values come from a separate, swappable **theme** file in `static/css/themes/`, selected at build time via `config.yml`:
 
@@ -233,14 +236,13 @@ Available themes:
 | `gradianto-midnight-blue`  | Gradianto | dark only |
 | `gradianto-ultra-light`    | Gradianto | light only |
 
-
-**Only the selected theme's CSS ships in the build**. It is copied to `_site/css/theme.css`. 
+**Only the selected theme's CSS ships in the build**. It is copied to `_site/css/theme.css`.
 
 An unknown `theme:` value fails the build with a list of valid options (instead of silently falling back to something unexpected).
 
 ### Dark mode
 
-For `solarized` variants, `selenized` variants and `dracula`, the site follows the visitor's OS-level light/dark preference (`prefers-color-scheme`) by default and shows a small switch in the top right corner for a manual override. 
+For `solarized` variants, `selenized` variants and `dracula`, the site follows the visitor's OS-level light/dark preference (`prefers-color-scheme`) by default and shows a small switch in the top right corner for a manual override.
 The choice is remembered (`localStorage`) and applied before first paint, so there's no flash of the wrong theme on repeat visits.
 
 The Gradianto variants are single-mode palettes with no official light or dark counterpart, for those, the switch is hidden automatically.

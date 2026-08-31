@@ -85,7 +85,7 @@ They function like this:
 
 If activated, this theme loads MathJax to render both inline and block-level mathematical notation.
 
-$$ 
+$$
 \int_0^1 x^2\,dx = \frac{1}{3}
 $$
 
@@ -105,7 +105,7 @@ Tables are a big thing !
 | Margin figure | Small visual |
 | Full-width figure | Wide diagram |
 
-[tufte-python](github.com/hyperphantasia/tufte-python) provides a broad range of [possibilities](https://hyperphantasia.github.io/tufte-python/articles/2026/tufte-style-python-blog/).
+[tufte-python](https://github.com/hyperphantasia/tufte-python) provides a broad range of [possibilities](https://hyperphantasia.github.io/tufte-python/articles/2026/tufte-style-python-blog/#tables).
 <br>
 <br>
 
