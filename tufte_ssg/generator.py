@@ -349,7 +349,8 @@ class Site:
     # -- static assets --------------------------------------------------
 
     TOGGLE_CAPABLE_THEMES = {"solarized", "dracula",
-                             "solarized-rainbow", "solAArized"}
+                             "solarized-rainbow", "solAArized",
+                             "selenized","selenized-bw"}
 
     def _theme_name(self) -> str:
         """Return the configured theme name."""

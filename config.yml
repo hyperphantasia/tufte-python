@@ -29,6 +29,8 @@ badge_image: assets/img/python_simple_blog_logo.png
 # extension:
 #   solarized                  (light + dark, follows system/toggle)
 #   solAArized                 (light + dark, follows system/toggle)
+#   selenized                  (light + dark, follows system/toggle)
+#   selenized-bw               (light + dark, follows system/toggle)
 #   solarized-rainbow          (light + dark, follows system/toggle) / Experimental
 #   dracula                    (light "Alucard" + dark "Dracula", follows system/toggle)
 #   gradianto-nature-green     (dark only)

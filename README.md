@@ -20,6 +20,9 @@
 ![Animated demonstration of a minimalist blog interface with clean, LaTeX-inspired typography and simple white space.](img/latex-style-python-blog.gif)
  <br>*A minimalistic Python powered blog. Live [demo](https://hyperphantasia.github.io/tufte-python).*
 
+> [!NOTE]
+> A hand-on tutorial is available on freeCodeCamp News! 
+
 ## Table of content
 
 - [tufte-python](#tufte-python)
@@ -220,6 +223,8 @@ Available themes:
 |---|---|---|
 | `solarized` (default)      | [Solarized](https://ethanschoonover.com/solarized/) | both, follows system, toggle in footer |
 | `solAArized` ([WCAG](https://www.w3.org/TR/WCAG20/) AA compliant)    | [SolAArized](https://github.com/paulcpederson/solAArized) | both, follows system, toggle in footer |
+| `selenized` | [Selenized](https://github.com/jan-warchol/selenized) | both, follows system, toggle in footer |
+| `selenized-bw`  | [Selenized](https://github.com/jan-warchol/selenized) | both, follows system, toggle in footer |
 | `solarized-rainbow` (experimental)    | Solarized | both, follows system, toggle in footer |
 | `dracula`                  | [Dracula](https://github.com/dracula/dracula-theme) (dark) + its official [Alucard](https://draculatheme.com/blog/dracula-pro-2.0-our-first-light-theme) palette (light) | both, follows system, toggle in footer |
 | `gradianto-nature-green`   | [Gradianto](https://github.com/thvardhan/Gradianto) | dark only |
@@ -235,7 +240,7 @@ An unknown `theme:` value fails the build with a list of valid options (instead 
 
 ### Dark mode
 
-For `solarized` variants and `dracula`, the site follows the visitor's OS-level light/dark preference (`prefers-color-scheme`) by default and shows a small switch in the top right corner for a manual override. 
+For `solarized` variants, `selenized` variants and `dracula`, the site follows the visitor's OS-level light/dark preference (`prefers-color-scheme`) by default and shows a small switch in the top right corner for a manual override. 
 The choice is remembered (`localStorage`) and applied before first paint, so there's no flash of the wrong theme on repeat visits.
 
 The Gradianto variants are single-mode palettes with no official light or dark counterpart, for those, the switch is hidden automatically.
