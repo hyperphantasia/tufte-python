@@ -7,11 +7,11 @@ tags: [python, writing, design]
 
 A personal blog does not need to compete with an application dashboard.
 
-It can give ideas room to breathe and place useful context close to the paragraph that needs it.
+It can give ideas room to breathe and display useful context close to the paragraph that needs it.
 
 <!--more-->
 
-This section appears only after the visitor opens the full article. It is meant to showcase examples shown in this freeCodeCamp News [tutorial](ADD_LINK).
+This section appears only after the visitor opens the full article. It is meant to showcase examples shown in this freeCodeCamp [article](https://www.freecodecamp.org/news/how-to-build-a-reading-focused-blog-with-python-markdown-and-github-pages-for-free).
 <br>
 <br>
 
@@ -95,7 +95,7 @@ The result is: $$ 1/3 $$
 
 ## Tables
 
-Tables are a big thing !
+Tables are a cornerstone of Tufte's design philosophy.
 <br>
 <br>
 
