@@ -23,7 +23,7 @@ permalink: "/articles/{year}/{slug}/"
 index_title: blog
 
 # Path (relative to baseurl) to the badge image shown in the header.
-badge_image: assets/img/python_simple_blog_logo.png
+badge_image: assets/img/grace.png
 
 # Color theme. One of the files in static/css/themes/, without the .css
 # extension:
