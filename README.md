@@ -22,7 +22,7 @@
  <br>*A minimalistic Python powered blog. Live [demo](https://hyperphantasia.github.io/tufte-python).*
 
 > [!NOTE]
-> A hand-on tutorial is available on freeCodeCamp News!
+> A lessons learned article is available on [freeCodeCamp News](https://www.freecodecamp.org/news/how-to-build-a-reading-focused-blog-with-python-markdown-and-github-pages-for-free)!
 
 ## Table of content
 
